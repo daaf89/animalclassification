@@ -6,6 +6,9 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
 
 #loading train and validation preprocessed data
 train_feat = np.load('train_feat_first.npy')
@@ -35,6 +38,7 @@ def distances(a,X,distance_fn=euclidean_distance):
     return dists
 
 def nn_classifier(test_X, train_X, train_y):
+    """Nearest Neighbour classification as a start to test classification."""
 #We create an array for you to populate with your class predictions
 #Go through each sample in test_X and predict its class
 #based on the label of its nearest neighbor in train_X.
@@ -50,4 +54,22 @@ def nn_classifier(test_X, train_X, train_y):
 
 #Evaluate the quality of your model's predictions
 pred_y = nn_classifier(val_feat, train_feat, train_labels)
-print "Accuracy:", np.sum(pred_y == val_labels)/np.float_(len(val_labels))
+print "NN-classification Accuracy:", np.sum(pred_y == val_labels)/np.float_(
+    len(val_labels))
+
+scores = []
+neighbours =[5,10,15,20,25,30,35,40,45,50,100]
+print "K-Nearest-neighbour classification:"
+for i in neighbours:
+    nbrs = KNeighborsClassifier(n_neighbors=i).fit(train_feat, train_labels)
+    scores.append(nbrs.score(val_feat, val_labels))
+print "best scoring K: ", neighbours[np.argmax(scores)]
+print "score: ", scores[np.argmax(scores)]
+
+supvc = SVC(C=5.0, kernel='linear', decision_function_shape='ovr').fit(
+    train_feat, train_labels)
+print "SVC score: ", supvc.score(val_feat, val_labels)
+
+mlp = MLPClassifier(solver='adam',activation='logistic',max_iter=1000,
+                    alpha=10).fit(train_feat, train_labels)
+print "MLP score: ", mlp.score(val_feat, val_labels)
