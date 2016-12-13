@@ -10,6 +10,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 from sklearn.grid_search import GridSearchCV
+import time
 
 #loading train and validation preprocessed data
 X_train = np.load('train_feat_big.npy')
@@ -35,10 +36,11 @@ svc_grid = [{'C': [0.000003, 0.00003, 0.0003, 0.003, 0.03, 0.3, 3, 30, 300,
              'decision_function_shape': ['ovo', 'ovr', None]}]
 
 mlp_grid = [{'hidden_layer_sizes': [(10,), (50,), (100,), (300,)],
-             'activation': ['identify', 'logistic', 'tanh', 'relu'],
+             'activation': ['identity', 'logistic', 'tanh', 'relu'],
              'solver': ['lbfgs', 'sgd', 'adam'],
              'alpha': [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10,
-                       100]}]
+                       100],
+             'max_iter': [500]}]
 
 knn_search = GridSearchCV(KNeighborsClassifier(), param_grid=knn_grid,
                           n_jobs=2, refit=True, error_score=0)
@@ -47,6 +49,8 @@ svc_search = GridSearchCV(SVC(), param_grid=svc_grid,
 mlp_search = GridSearchCV(MLPClassifier(), param_grid=mlp_grid,
                           n_jobs=2, refit=True, error_score=0)
 
+def getkey(item):
+    return item[1]
 
 def report(grid_scores, n_top=3):
     results.write(
@@ -56,6 +60,7 @@ def report(grid_scores, n_top=3):
     for i in topscores:
         results.write(str(i) + '\n')
         print i, '\n'
+
 results=open('results.txt', 'w+')
 for i in [knn_search, svc_search, mlp_search]:
     print 'start training'
@@ -71,5 +76,4 @@ for i in [knn_search, svc_search, mlp_search]:
     results.write("Residual sum of squares: %.2f" % np.mean((i.predict(X_test) - y_test) ** 2))
     print 'wrote sum of squares'
     report(i.grid_scores_, n_top=5)
-    joblib.dump(i, dict[i])
 results.close()
