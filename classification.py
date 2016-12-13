@@ -11,8 +11,8 @@ from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 
 #loading train and validation preprocessed data
-train_feat = np.load('train_feat_first.npy')
-val_feat = np.load('val_feat_first.npy')
+train_feat = np.load('train_feat_big.npy')
+val_feat = np.load('val_feat_big.npy')
 
 #Training and validation ground truth labels. Needed for classification
 train_labels = np.array([int(line.strip().split(" ")[1]) for
