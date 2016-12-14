@@ -40,7 +40,7 @@ mlp_grid = [{'hidden_layer_sizes': [(10,), (50,), (100,), (300,)],
              'solver': ['lbfgs', 'sgd', 'adam'],
              'alpha': [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10,
                        100],
-             'max_iter': [500]}]
+             'max_iter': [1000]}]
 
 knn_search = GridSearchCV(KNeighborsClassifier(), param_grid=knn_grid,
                           n_jobs=2, refit=True, error_score=0)
