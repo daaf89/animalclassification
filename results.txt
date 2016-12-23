@@ -1,0 +1,53 @@
+start training 
+Done training, it took me: 76.337403059 seconds 
+GridSearchCV(cv=None, error_score=0,
+       estimator=KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+           metric_params=None, n_jobs=1, n_neighbors=5, p=2,
+           weights='uniform'),
+       fit_params={}, iid=True, n_jobs=2,
+       param_grid=[{'n_neighbors': [1, 2, 5, 10, 15, 20, 25], 'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'], 'metric': ['minkowski'], 'p': [1, 2], 'weights': ['uniform', 'distance'], 'leaf_size': [10, 20, 30, 50]}],
+       pre_dispatch='2*n_jobs', refit=True, scoring=None, verbose=0) score is: 0.365
+Made a prediction, it took me: 0.135833978653 seconds 
+Residual sum of squares: 10.95The top 5 performing parameter settings are: 
+mean: 0.35500, std: 0.02279, params: {'n_neighbors': 15, 'algorithm': 'auto', 'metric': 'minkowski', 'p': 2, 'weights': 'distance', 'leaf_size': 20}
+mean: 0.35500, std: 0.02038, params: {'n_neighbors': 15, 'algorithm': 'ball_tree', 'metric': 'minkowski', 'p': 2, 'weights': 'distance', 'leaf_size': 20}
+mean: 0.35500, std: 0.02279, params: {'n_neighbors': 15, 'algorithm': 'kd_tree', 'metric': 'minkowski', 'p': 2, 'weights': 'distance', 'leaf_size': 20}
+mean: 0.35400, std: 0.02175, params: {'n_neighbors': 15, 'algorithm': 'auto', 'metric': 'minkowski', 'p': 2, 'weights': 'distance', 'leaf_size': 30}
+mean: 0.35400, std: 0.02175, params: {'n_neighbors': 15, 'algorithm': 'kd_tree', 'metric': 'minkowski', 'p': 2, 'weights': 'distance', 'leaf_size': 30}
+start training 
+Done training, it took me: 187.842716217 seconds 
+GridSearchCV(cv=None, error_score=0,
+       estimator=SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False),
+       fit_params={}, iid=True, n_jobs=2,
+       param_grid=[{'kernel': ['rbf', 'linear', 'poly', 'sigmoid'], 'C': [3e-06, 3e-05, 0.0003, 0.003, 0.03, 0.3, 3, 30, 300, 3000], 'decision_function_shape': ['ovo', 'ovr', None], 'degree': [1, 3, 10]}],
+       pre_dispatch='2*n_jobs', refit=True, scoring=None, verbose=0) score is: 0.495
+Made a prediction, it took me: 0.0746591091156 seconds 
+Residual sum of squares: 7.70The top 5 performing parameter settings are: 
+mean: 0.41200, std: 0.01932, params: {'kernel': 'poly', 'C': 0.3, 'decision_function_shape': 'ovo', 'degree': 1}
+mean: 0.41200, std: 0.01932, params: {'kernel': 'poly', 'C': 0.3, 'decision_function_shape': 'ovr', 'degree': 1}
+mean: 0.41200, std: 0.01932, params: {'kernel': 'poly', 'C': 0.3, 'decision_function_shape': None, 'degree': 1}
+mean: 0.40500, std: 0.00622, params: {'kernel': 'linear', 'C': 0.003, 'decision_function_shape': 'ovo', 'degree': 1}
+mean: 0.40500, std: 0.00622, params: {'kernel': 'linear', 'C': 0.003, 'decision_function_shape': 'ovo', 'degree': 3}
+start training 
+Done training, it took me: 3959.32146811 seconds 
+GridSearchCV(cv=None, error_score=0,
+       estimator=MLPClassifier(activation='relu', alpha=0.0001, batch_size='auto', beta_1=0.9,
+       beta_2=0.999, early_stopping=False, epsilon=1e-08,
+       hidden_layer_sizes=(100,), learning_rate='constant',
+       learning_rate_init=0.001, max_iter=200, momentum=0.9,
+       nesterovs_momentum=True, power_t=0.5, random_state=None,
+       shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,
+       verbose=False, warm_start=False),
+       fit_params={}, iid=True, n_jobs=2,
+       param_grid=[{'alpha': [1e-06, 1e-05, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100], 'activation': ['identity', 'logistic', 'tanh', 'relu'], 'solver': ['lbfgs', 'sgd', 'adam'], 'max_iter': [1000], 'hidden_layer_sizes': [(10,), (50,), (100,), (300,)]}],
+       pre_dispatch='2*n_jobs', refit=True, scoring=None, verbose=0) score is: 0.495
+Made a prediction, it took me: 0.00417804718018 seconds 
+Residual sum of squares: 6.80The top 5 performing parameter settings are: 
+mean: 0.43800, std: 0.00788, params: {'alpha': 0.001, 'activation': 'logistic', 'max_iter': 1000, 'solver': 'sgd', 'hidden_layer_sizes': (300,)}
+mean: 0.43800, std: 0.01008, params: {'alpha': 0.01, 'activation': 'logistic', 'max_iter': 1000, 'solver': 'sgd', 'hidden_layer_sizes': (300,)}
+mean: 0.43500, std: 0.02731, params: {'alpha': 0.0001, 'activation': 'logistic', 'max_iter': 1000, 'solver': 'sgd', 'hidden_layer_sizes': (50,)}
+mean: 0.43500, std: 0.02724, params: {'alpha': 0.1, 'activation': 'logistic', 'max_iter': 1000, 'solver': 'sgd', 'hidden_layer_sizes': (50,)}
+mean: 0.43500, std: 0.01008, params: {'alpha': 1, 'activation': 'logistic', 'max_iter': 1000, 'solver': 'sgd', 'hidden_layer_sizes': (100,)}
