@@ -33,7 +33,7 @@ def extract_sift(trainimage):
     point1, sift1 = sift.computeSIFTofPoints(trainimage, allpoints, sigma,
                                              nrOrientBins=8, nrSpatBins=4,
                                              nrPixPerBin=4)
-    return point1, sift1
+    return sift1
 
 
 # Put the SIFT features from all training images in this variable.
@@ -44,7 +44,7 @@ for i in xrange(len(trainimages)):
 # Extract point locations from the image using your selected point method
 #and parameters.
 # Compute the SIFT features.
-    point1, sift1 = extract_sift(trainimages[i])
+    sift1 = extract_sift(trainimages[i])
     trainpoints.extend(sift1)
 # Cluster the SIFT features and put them in a matrix with the name 'clusters'!
 print "Clustering..."
@@ -54,7 +54,7 @@ def cluster_data(features, k, nr_iter=25):
     centroids = k_means(features, n_clusters=k, max_iter=nr_iter)[0]
     return centroids
 # Specify the number of clusters to use.
-k = 100
+k = 300
 # Cluster the synthetic data defined previously.
 clusters = cluster_data(trainpoints, k)
 print 'done!'
@@ -82,12 +82,13 @@ size_of_histograms = k #equal to the number of clusters!
 train_feat = np.zeros((len(trainimages), size_of_histograms))
 
 for i, image in enumerate(trainimages):
-    point1, image_sift = extract_sift(image)
+    image_sift = extract_sift(image)
     for point in image_sift:
         x = [euclidean_distance(point, clust) for clust in clusters]
         clusterin = np.argmin(x)
         train_feat[i][clusterin] += 1
 print 'done!'
+np.save('train_feat.npy',train_feat)
 # Go through the SIFTs of every image and create a histogram for the image
 # relative to the clusters you discovered in the previous phase.
 
@@ -108,7 +109,7 @@ val_labels = np.array([int(line.rstrip().split(' ')[1]) for
 val_feat = np.zeros((len(valimages), size_of_histograms))
 
 for i, image in enumerate(valimages):
-    point1, image_sift = extract_sift(image)
+    image_sift = extract_sift(image)
     for point in image_sift:
         x = [euclidean_distance(point, clust) for clust in clusters]
         clusterin = np.argmin(x)
@@ -118,5 +119,4 @@ print 'done!'
 #to store the train and validation histograms. This allows us to play around
 #with feature selection, while saving the changes. Does overwrite itself, so
 #be careful!
-np.save('train_feat.npy',train_feat)
 np.save('val_feat.npy',val_feat)
